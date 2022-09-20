@@ -7,6 +7,7 @@ pub struct BlockHeader{
     pub time: i64,
     pub tx_hash: String,
     pub pre_hash: String,
+    pub nonce: usize,
 }
 
 #[derive(Debug)]
@@ -31,11 +32,16 @@ impl Block {
                 time: time,
                 tx_hash: tx_hash,
                 pre_hash: pre_hash,
+                nonce: 0,
             },
             hash: "".to_string(),
             data: data,
         };
         block.set_hash();
         block
+    }
+
+    pub fn get_hash(&self) -> String {
+        self.hash.clone()
     }
 }

@@ -1,7 +1,9 @@
 use crate::block;
+use tracing::info;
 
 pub struct BlockChain {
     pub blocks: Vec<block::Block>,
+    pub height: usize,
 }
 
 impl BlockChain {
@@ -9,6 +11,7 @@ impl BlockChain {
         let pre_block = &self.blocks[self.blocks.len() -1];
         let new_block = block::Block::new_block(data,pre_block.hash.clone());
         self.blocks.push(new_block);
+        self.height +=1;
     }
 
     fn new_genesis_block() -> block::Block{
@@ -18,6 +21,14 @@ impl BlockChain {
     pub fn new_blockchain() -> BlockChain {
         BlockChain { 
             blocks: vec![BlockChain::new_genesis_block()],
+            height: 0,
+        }
+    }
+
+    pub fn blocks_info(&self) {
+        for block in self.blocks.iter() {
+            // info!("{:#?}", block);
+            println!("{:#?}",block);
         }
     }
 }
